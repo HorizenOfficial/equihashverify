@@ -34,7 +34,6 @@
                 "src/equi/endian.c"
             ],
             "include_dirs": [
-                "<(module_root_dir)/src/equi/",
             ],
             "defines": [
             ],
@@ -43,6 +42,7 @@
                 "-Wl,--whole-archive",
                 "-fPIC",
                 "-Wno-pointer-sign",
+                "-D_GNU_SOURCE"
             ],
             "link_settings": {
                 "libraries": [
