@@ -20,7 +20,8 @@
             ],
             "link_settings": {
                 "libraries": [
-                    "-Wl,-rpath,./build/Release/"
+                    "-Wl,-rpath,./build/Release/",
+                    "-equi.so"
                 ]
             },
         },
