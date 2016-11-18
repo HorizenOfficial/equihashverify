@@ -21,7 +21,6 @@
             "link_settings": {
                 "libraries": [
                     "-Wl,-rpath,./build/Release/",
-                    "-equi.so"
                 ]
             },
         },
@@ -35,10 +34,9 @@
                 "src/equi/endian.c"
             ],
             "include_dirs": [
-                "<(module_root_dir)src/equi/",
+                "<(module_root_dir)/src/equi/",
             ],
             "defines": [
-                "_GNU_SOURCE"
             ],
             "cflags_c": [
                 "-std=c11",
