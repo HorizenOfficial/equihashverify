@@ -4,6 +4,7 @@
   "description": "function to check whether an Equihash solution is valid",
   "main": "equihashverify",
   "scripts": {
+    "install": "node-gyp rebuild",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
