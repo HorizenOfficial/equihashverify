@@ -1,6 +1,6 @@
 {
   "name": "equihashverify",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "function to check whether an Equihash solution is valid",
   "main": "equihashverify",
   "scripts": {
@@ -9,20 +9,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshuayabut/equihashverify"
+    "url": "https://github.com/zencashofficial/equihashverify"
   },
   "keywords": [
-    "zclassic"
+    "ZenCash"
   ],
-  "author": "Joshua Yabut",
+  "author": "ZenCash",
   "contributors": [
+    "Joshua Yabut",
     "Sammy Libre"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/joshuayabut/equihashverify/issues"
+    "url": "https://github.com/zencashofficial/equihashverify/issues"
   },
-  "homepage": "https://github.com/joshuayabut/equihashverify",
+  "homepage": "https://github.com/zencashofficial/equihashverify",
   "dependencies": {
     "bindings": "*",
     "node-gyp": "*",

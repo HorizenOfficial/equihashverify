@@ -13,4 +13,4 @@ ev.verify(header, solution);
 ````
 
 ##help
-https://zclassic.herokuapp.com
+https://discord.gg/sXWYQZP
