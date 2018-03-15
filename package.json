@@ -1,0 +1,34 @@
+{
+  "name": "equihashverify",
+  "version": "0.0.1",
+  "description": "function to check whether an Equihash solution is valid",
+  "main": "equihashverify",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josephnicholas/equihashverify"
+  },
+  "keywords": [
+    "zclassic"
+  ],
+  "author": "Joshua Yabut",
+  "contributors": [
+    "Sammy Libre"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josephnicholas/equihashverify/issues"
+  },
+  "homepage": "https://github.com/josephnicholas/equihashverify",
+  "dependencies": {
+    "bindings": "*",
+    "node-gyp": "*",
+    "nan": "*"
+  },
+  "engines": {
+    "node": ">=0.12"
+  }
+}
