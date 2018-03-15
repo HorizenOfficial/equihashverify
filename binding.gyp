@@ -8,6 +8,7 @@
             "sources": [
             	"support/cleanse.cpp",
             	"uint256.cpp",
+                "arith_uint256.cpp",
             	"random.cpp",
             	"util.cpp",
             	"utiltime.cpp",

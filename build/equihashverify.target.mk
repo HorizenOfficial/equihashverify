@@ -96,6 +96,7 @@ INCS_Release := \
 OBJS := \
 	$(obj).target/$(TARGET)/support/cleanse.o \
 	$(obj).target/$(TARGET)/uint256.o \
+	$(obj).target/$(TARGET)/arith_uint256.o \
 	$(obj).target/$(TARGET)/random.o \
 	$(obj).target/$(TARGET)/util.o \
 	$(obj).target/$(TARGET)/utiltime.o \

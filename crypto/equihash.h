@@ -32,7 +32,7 @@ void CompressArray(const unsigned char* in, size_t in_len,
                    unsigned char* out, size_t out_len,
                    size_t bit_len, size_t byte_pad=0);
 void GenerateHash(const eh_HashState& base_state, eh_index g,
-                  unsigned char* hash, size_t hLen)
+                  unsigned char* hash, size_t hLen);
 
 eh_index ArrayToEhIndex(const unsigned char* array);
 eh_trunc TruncateIndex(const eh_index i, const unsigned int ilen);

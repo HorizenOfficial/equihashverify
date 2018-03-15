@@ -6,43 +6,43 @@
 #include <sodium.h>
 #include "crypto/equihash.h"
 
+#include "arith_uint256.h"
+#include "uint256.h"
+#include <vector>
+#include <boost/test/unit_test.hpp>
+
 /*extern "C" {
     #include "src/equi/equi.h"
 }*/
 
 using namespace v8;
 
-void verifyEH(const unsigned char *hdr, const unsigned char *soln){
-  const int n = 200;
-  const int k = 9;
-  const int collisionBitLength = n / (k + 1);
-  const int collisionByteLength = (collisionBitLength + 7) / 8;
-  const int hashLength = (k + 1) * collisionByteLength;
-  const int indicesPerHashOutput = 512 / n;
-  const int hashOutput = indecesPerHashOutput * n / 8;
-  const int equihashSolutionSize = (1 << k) * (n / (k + 1) + 1) / 8;
-  const int solnr = 1 << k;
-  uint32_t indices[512];
+bool TestEquihashValidator(unsigned int n, unsigned int k, const std::string &I, const arith_uint256 &nonce, std::vector<uint32_t> soln, bool expected) {
+    size_t cBitLen { n/(k+1) };
+    crypto_generichash_blake2b_state state;
+    EhInitialiseState(n, k, state);
+    uint256 V = ArithToUint256(nonce);
+    crypto_generichash_blake2b_update(&state, (unsigned char*)&I[0], I.size());
+    crypto_generichash_blake2b_update(&state, V.begin(), V.size());
+    BOOST_TEST_MESSAGE("Running validator: n = " << n << ", k = " << k << ", I = " << I << ", V = " << V.GetHex() << ", expected = " << expected << ", soln =");
+    std::stringstream strm;
+    //PrintSolution(strm, soln);
+    BOOST_TEST_MESSAGE(strm.str());
+    bool isValid;
+    EhIsValidSolution(n, k, state, GetMinimalFromIndices(soln, cBitLen), isValid);
+    BOOST_CHECK(isValid == expected);
 
-  crypto_generichash_blake2b_state state;
-  Eh200_9.InitialiseState(state);
-  crypto_generichash_blake2b_update(&state, hdr, 140);
+    return isValid;
+}
 
-  ExpandArray(soln, equihashSolutionSize, (unsigned char *)&indices, sizeof(indices), collisionBitLength + 1, 1);
-  
-  uint8_t vHash[hashLength];
-  memset(vHash, 0 , sizeof(vHash));
+bool verifyEH(const char *hdr, const char *soln){
+  unsigned int n = 200;
+  unsigned int k = 9;
 
-   for (int j = 0; j < solnr; j++) {
-  	uint8_t tmpHash[hashOutput];
-  	uint8_t hash[hashLength];
-  	int i = be32toh(indices[j]);
-  	GenerateHash(&state, i / indicesPerHashOutput, tmpHash, hashOutput);
-  	ExpandArray(tmpHash + (i % indicesPerHashOutput * n / 8), n / 8, hash, hashLength, collisionBitLength, 0);
-  	for (int k = 0; k < hashLength; ++k)
-  	    vHash[k] ^= hash[k];
-  }
-  return IsZero(sizeof(vHash));
+  std::vector<char>::size_type size = strlen((const char*) soln);
+  std::vector<uint32_t> solution(soln, soln + size);
+
+  return TestEquihashValidator(n, k, "Equihash is an asymmetric PoW based on the Generalised Birthday problem.", 1, solution, true);
 }
 
 void Verify(const v8::FunctionCallbackInfo<Value>& args) {
