@@ -17,32 +17,22 @@
 
 using namespace v8;
 
-bool TestEquihashValidator(unsigned int n, unsigned int k, const std::string &I, const arith_uint256 &nonce, std::vector<uint32_t> soln, bool expected) {
-    size_t cBitLen { n/(k+1) };
-    crypto_generichash_blake2b_state state;
-    EhInitialiseState(n, k, state);
-    uint256 V = ArithToUint256(nonce);
-    crypto_generichash_blake2b_update(&state, (unsigned char*)&I[0], I.size());
-    crypto_generichash_blake2b_update(&state, V.begin(), V.size());
-    BOOST_TEST_MESSAGE("Running validator: n = " << n << ", k = " << k << ", I = " << I << ", V = " << V.GetHex() << ", expected = " << expected << ", soln =");
-    std::stringstream strm;
-    //PrintSolution(strm, soln);
-    BOOST_TEST_MESSAGE(strm.str());
-    bool isValid;
-    EhIsValidSolution(n, k, state, GetMinimalFromIndices(soln, cBitLen), isValid);
-    BOOST_CHECK(isValid == expected);
-
-    return isValid;
-}
-
 bool verifyEH(const char *hdr, const char *soln){
   unsigned int n = 200;
   unsigned int k = 9;
 
-  std::vector<char>::size_type size = strlen((const char*) soln);
-  std::vector<uint32_t> solution(soln, soln + size);
+  // Hash state
+  crypto_generichash_blake2b_state state;
+  EhInitialiseState(n, k, state);
 
-  return TestEquihashValidator(n, k, "Equihash is an asymmetric PoW based on the Generalised Birthday problem.", 1, solution, true);
+  crypto_generichash_blake2b_update(&state, (const unsigned char*)hdr, 140);
+
+  unsigned char* solution = (unsigned char*)soln;
+  std::vector<unsigned char>::size_type size = strlen((const char*) soln);
+  std::vector<unsigned char> vec(soln, soln + size);
+  bool isValid = Eh200_9.IsValidSolution(state, vec);
+  
+  return isValid;
 }
 
 void Verify(const v8::FunctionCallbackInfo<Value>& args) {
