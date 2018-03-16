@@ -3,18 +3,13 @@
 #include <node_buffer.h>
 #include <v8.h>
 #include <stdint.h>
-#include <sodium.h>
 #include "crypto/equihash.h"
 
-#include "arith_uint256.h"
-#include "uint256.h"
+
 #include <vector>
-//#include <boost/test/unit_test.hpp>
-
-
 using namespace v8;
 
-int verifyEH(const char *hdr, std::vector<unsigned char> soln){
+int verifyEH(const char *hdr, std::vector<unsigned char> &soln){
   unsigned int n = 200;
   unsigned int k = 9;
 
@@ -49,6 +44,11 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
   }
 
   const char *hdr = node::Buffer::Data(header);
+  if(node::Buffer::Length(header) != 140) {
+	  //invalid hdr length
+	  args.GetReturnValue().Set(false);
+	  return;
+  }
   const char *soln = node::Buffer::Data(solution);
 
   std::vector<unsigned char> vecSolution(soln, soln + node::Buffer::Length(solution));

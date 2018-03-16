@@ -18,7 +18,7 @@
 #include <set>
 #include <vector>
 
-//#include <boost/static_assert.hpp>
+#include <boost/static_assert.hpp>
 
 
 typedef crypto_generichash_blake2b_state eh_HashState;
@@ -31,8 +31,6 @@ void ExpandArray(const unsigned char* in, size_t in_len,
 void CompressArray(const unsigned char* in, size_t in_len,
                    unsigned char* out, size_t out_len,
                    size_t bit_len, size_t byte_pad=0);
-void GenerateHash(const eh_HashState& base_state, eh_index g,
-                  unsigned char* hash, size_t hLen);
 
 eh_index ArrayToEhIndex(const unsigned char* array);
 eh_trunc TruncateIndex(const eh_index i, const unsigned int ilen);
@@ -166,9 +164,9 @@ template<unsigned int N, unsigned int K>
 class Equihash
 {
 private:
-    //BOOST_STATIC_ASSERT(K < N);
-    //BOOST_STATIC_ASSERT(N % 8 == 0);
-    //BOOST_STATIC_ASSERT((N/(K+1)) + 1 < 8*sizeof(eh_index));
+    BOOST_STATIC_ASSERT(K < N);
+    BOOST_STATIC_ASSERT(N % 8 == 0);
+    BOOST_STATIC_ASSERT((N/(K+1)) + 1 < 8*sizeof(eh_index));
 
 public:
     enum : size_t { IndicesPerHashOutput=512/N };
