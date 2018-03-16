@@ -27,8 +27,7 @@ bool verifyEH(const char *hdr, const char *soln){
 
   crypto_generichash_blake2b_update(&state, (const unsigned char*)hdr, 140);
 
-  unsigned char* solution = (unsigned char*)soln;
-  std::vector<unsigned char>::size_type size = strlen((const char*) soln);
+  std::vector<unsigned char>::size_type size = strlen(soln);
   std::vector<unsigned char> vec(soln, soln + size);
   bool isValid = Eh200_9.IsValidSolution(state, vec);
   
