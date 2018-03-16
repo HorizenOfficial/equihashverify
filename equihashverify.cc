@@ -11,13 +11,10 @@
 #include <vector>
 //#include <boost/test/unit_test.hpp>
 
-/*extern "C" {
-    #include "src/equi/equi.h"
-}*/
 
 using namespace v8;
 
-bool verifyEH(const char *hdr, const char *soln){
+int verifyEH(const char *hdr, std::vector<unsigned char> soln){
   unsigned int n = 200;
   unsigned int k = 9;
 
@@ -27,9 +24,7 @@ bool verifyEH(const char *hdr, const char *soln){
 
   crypto_generichash_blake2b_update(&state, (const unsigned char*)hdr, 140);
 
-  std::vector<unsigned char>::size_type size = strlen(soln);
-  std::vector<unsigned char> vec(soln, soln + size);
-  bool isValid = Eh200_9.IsValidSolution(state, vec);
+  bool isValid = Eh200_9.IsValidSolution(state, soln);
   
   return isValid;
 }
@@ -56,7 +51,9 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
   const char *hdr = node::Buffer::Data(header);
   const char *soln = node::Buffer::Data(solution);
 
-  bool result = verifyEH(hdr, soln);
+  std::vector<unsigned char> vecSolution(soln, soln + node::Buffer::Length(solution));
+
+  bool result = verifyEH(hdr, vecSolution);
   args.GetReturnValue().Set(result);
 
 }
