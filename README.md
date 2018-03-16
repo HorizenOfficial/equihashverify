@@ -1,7 +1,7 @@
-# equihashverify
+# Equihash - Zcash Implementation
 nodejs native binding to check for valid Equihash solutions
 
-##usage:
+#Usage:
 ````javascript
 var ev = require('bindings')('equihashverify.node');
 
@@ -11,6 +11,3 @@ var solution = new Buffer(..., 'hex'); //do not include byte size preamble "fd40
 ev.verify(header, solution);
 //returns boolean
 ````
-
-##help
-https://zclassic.herokuapp.com
