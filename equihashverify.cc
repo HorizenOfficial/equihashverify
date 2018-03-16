@@ -9,7 +9,7 @@
 #include "arith_uint256.h"
 #include "uint256.h"
 #include <vector>
-#include <boost/test/unit_test.hpp>
+//#include <boost/test/unit_test.hpp>
 
 /*extern "C" {
     #include "src/equi/equi.h"

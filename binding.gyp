@@ -9,7 +9,7 @@
             	"support/cleanse.cpp",
             	"uint256.cpp",
                 "arith_uint256.cpp",
-            	"random.cpp",
+            	"random.cpp",   
             	"util.cpp",
             	"utiltime.cpp",
             	"utilstrencodings.cpp",
@@ -25,7 +25,11 @@
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",
                 ".",
-                "/usr/include"
+                "/usr/include",
+                "/usr/include/boost",
+            ],
+            "libararies": [
+                "/usr/lib/x86_64-linux-gnu"
             ],
             "defines": [
             "HAVE_DECL_STRNLEN=1",
@@ -36,10 +40,13 @@
                 "-Wl,--whole-archive",
                 "-fPIC",
                 "-fexceptions"
+                
             ],
             "link_settings": {
                 "libraries": [
                     "-Wl,-rpath,./build/Release/",
+                    "-lboost_system",
+                    "-lsodium"
                 ]
             },
         }

@@ -4,7 +4,7 @@
   "description": "function to check whether an Equihash solution is valid",
   "main": "equihashverify",
   "scripts": {
-    "install": "node-gyp rebuild",
+    "install": "env V=1 node-gyp rebuild",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,8 +25,9 @@
   "homepage": "https://github.com/josephnicholas/equihashverify",
   "dependencies": {
     "bindings": "*",
-    "node-gyp": "*",
-    "nan": "*"
+    "libsodium": "^0.7.3",
+    "nan": "*",
+    "node-gyp": "*"
   },
   "engines": {
     "node": ">=0.12"

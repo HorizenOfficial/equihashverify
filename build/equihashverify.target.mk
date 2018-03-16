@@ -38,7 +38,8 @@ CFLAGS_CC_Debug := \
 	-std=c++11 \
 	-Wl,--whole-archive \
 	-fPIC \
-	-fexceptions
+	-fexceptions \
+	-lboost_system
 
 INCS_Debug := \
 	-I/home/osboxes/.node-gyp/9.8.0/include/node \
@@ -47,7 +48,8 @@ INCS_Debug := \
 	-I/home/osboxes/.node-gyp/9.8.0/deps/v8/include \
 	-I$(srcdir)/node_modules/nan \
 	-I$(srcdir)/. \
-	-I/usr/include
+	-I/usr/include \
+	-I/usr/include/boost
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=equihashverify' \
@@ -82,7 +84,8 @@ CFLAGS_CC_Release := \
 	-std=c++11 \
 	-Wl,--whole-archive \
 	-fPIC \
-	-fexceptions
+	-fexceptions \
+	-lboost_system
 
 INCS_Release := \
 	-I/home/osboxes/.node-gyp/9.8.0/include/node \
@@ -91,7 +94,8 @@ INCS_Release := \
 	-I/home/osboxes/.node-gyp/9.8.0/deps/v8/include \
 	-I$(srcdir)/node_modules/nan \
 	-I$(srcdir)/. \
-	-I/usr/include
+	-I/usr/include \
+	-I/usr/include/boost
 
 OBJS := \
 	$(obj).target/$(TARGET)/support/cleanse.o \
@@ -154,7 +158,9 @@ LDFLAGS_Release := \
 	-m64
 
 LIBS := \
-	-Wl,-rpath,./build/Release/
+	-Wl,-rpath,./build/Release/ \
+	-lboost_system \
+	-lsodium
 
 $(obj).target/equihashverify.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(obj).target/equihashverify.node: LIBS := $(LIBS)
