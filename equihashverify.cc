@@ -9,7 +9,7 @@
 #include <vector>
 using namespace v8;
 
-int verifyEH(const char *hdr, std::vector<unsigned char> &soln){
+int verifyEH(const char *hdr, const std::vector<unsigned char> &soln){
   unsigned int n = 200;
   unsigned int k = 9;
 
