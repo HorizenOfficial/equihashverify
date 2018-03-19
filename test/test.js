@@ -34,4 +34,41 @@ describe('equihashverify', function() {
         assert.equal(isValid, false);
     });
 
+    it('should return false for same numeric values tests', function(){
+        const header = Buffer('0400000008e9694cc2120ec1b5733cc12687b609058eec4f7046a521ad1d1e3049b400003e7420ed6f40659de0305ef9b7ec037f4380ed9848bc1c015691c90aa16ff3930000000000000000000000000000000000000000000000000000000000000000c9310d5874e0001f000000000000000000000000000000010b000000000000000000000000000040', 'hex');
+        var solnRaw = '';
+        
+        var listNumeric = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        
+        var solnRaw = '';
+        listNumeric.forEach(num => {
+                solnRaw = '';
+                for (var i = 0; i < 2688; i++) {
+        
+                        solnRaw += num;
+                };      
+                var solnBuffer = Buffer(solnRaw, 'hex');
+                var isValid = equihash.verify(header, solnBuffer);
+                assert.equal(isValid, false);
+        });
+    });
+
+    it('should return false for same alpha values test', function(){
+        const header = Buffer('0400000008e9694cc2120ec1b5733cc12687b609058eec4f7046a521ad1d1e3049b400003e7420ed6f40659de0305ef9b7ec037f4380ed9848bc1c015691c90aa16ff3930000000000000000000000000000000000000000000000000000000000000000c9310d5874e0001f000000000000000000000000000000010b000000000000000000000000000040', 'hex');
+        var solnRaw = '';
+
+        var listAlpha = ['A', 'B', 'C', 'D', 'E', 'F'];
+        
+        listAlpha.forEach(letter => {
+            solnRaw = '';
+            for (var i = 0; i < 2688; i++) {
+    
+                    solnRaw += letter;
+            };      
+            var solnBuffer = Buffer(solnRaw, 'hex');
+            var isValid = equihash.verify(header, solnBuffer);
+            assert.equal(isValid, false);
+        }); 
+    });
+
 });
