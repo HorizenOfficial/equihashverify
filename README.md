@@ -3,7 +3,7 @@ nodejs native binding to check for valid Equihash solutions
 
 # Dependencies
 ````
-sudo apt-get install libboost-all-dev
+sudo apt-get install build-essential libsodium-dev libboost-system-dev
 ````
 
 # Usage:
@@ -18,7 +18,8 @@ ev.verify(header, solution);
 ````
 # Test Suite:
 ````
+sudo npm install -g mocha
 npm install
-npm test
+mocha
 ````
 
