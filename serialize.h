@@ -6,7 +6,6 @@
 #ifndef BITCOIN_SERIALIZE_H
 #define BITCOIN_SERIALIZE_H
 
-#include <endian.h>
 #include <algorithm>
 #include <assert.h>
 #include <ios>
@@ -22,6 +21,8 @@
 
 #include <boost/array.hpp>
 #include <boost/optional.hpp>
+
+#include "crypto/common.h"
 
 class CScript;
 
