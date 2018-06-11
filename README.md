@@ -6,7 +6,7 @@ nodejs native binding to check for valid Equihash solutions
 sudo apt-get install build-essential libsodium-dev libboost-system-dev
 ````
 
-# Usage:
+# Usage
 ````javascript
 var ev = require('bindings')('equihashverify.node');
 
@@ -16,6 +16,12 @@ var solution = new Buffer(..., 'hex'); //do not include byte size preamble "fd40
 ev.verify(header, solution, n, k);
 //returns boolean
 ````
+
+# Backward compatibility
+````javascript
+ev.verify(header, solution);
+````
+
 # Test Suite:
 ````
 sudo npm install -g mocha
