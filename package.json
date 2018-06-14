@@ -1,6 +1,6 @@
 {
   "name": "equihashverify",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "function to check whether an Equihash solution is valid",
   "main": "equihashverify",
   "scripts": {
@@ -17,7 +17,8 @@
   "author": "Joseph Nicholas R. Alcantara",
   "contributors": [
     "Alberto Garoffolo",
-    "cronic"
+    "cronic",
+    "LitecoinZ"
   ],
   "license": "MIT",
   "bugs": {
