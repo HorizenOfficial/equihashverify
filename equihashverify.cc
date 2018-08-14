@@ -9,10 +9,10 @@
 #include <vector>
 using namespace v8;
 
-int verifyEH(const char *hdr, const std::vector<unsigned char> &soln, unsigned int n = 200, unsigned int k = 9){
+int verifyEH(const char *hdr, const std::vector<unsigned char> &soln, unsigned int n = 200, unsigned int k = 9, const char *personalizationString = "ZcashPoW"){
   // Hash state
   crypto_generichash_blake2b_state state;
-  EhInitialiseState(n, k, state);
+  EhInitialiseState(n, k, state, personalizationString);
 
   crypto_generichash_blake2b_update(&state, (const unsigned char*)hdr, 140);
 
@@ -40,6 +40,7 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = Isolate::GetCurrent();
   HandleScope scope(isolate);
 
+  const char *personalizationString = "ZcashPoW";
   unsigned int n = 200;
   unsigned int k = 9;
 
@@ -55,6 +56,10 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
   if (args.Length() == 4) {
     n = args[2]->Uint32Value();
     k = args[3]->Uint32Value();
+  }
+  if (args.Length() == 5) {
+    String::Utf8Value str(args[4]);
+    personalizationString = *str;
   }
 
   if(!node::Buffer::HasInstance(header) || !node::Buffer::HasInstance(solution)) {
@@ -73,7 +78,7 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
 
   std::vector<unsigned char> vecSolution(soln, soln + node::Buffer::Length(solution));
 
-  bool result = verifyEH(hdr, vecSolution, n, k);
+  bool result = verifyEH(hdr, vecSolution, n, k, personalizationString);
   args.GetReturnValue().Set(result);
 
 }
