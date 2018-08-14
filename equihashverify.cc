@@ -9,10 +9,10 @@
 #include <vector>
 using namespace v8;
 
-int verifyEH(const char *hdr, const std::vector<unsigned char> &soln, unsigned int n = 200, unsigned int k = 9){
+int verifyEH(const char *hdr, const std::vector<unsigned char> &soln, unsigned int n = 200, unsigned int k = 9, const char *personalizationString = "ZcashPoW"){
   // Hash state
   crypto_generichash_blake2b_state state;
-  EhInitialiseState(n, k, state);
+  EhInitialiseState(n, k, state, personalizationString);
 
   crypto_generichash_blake2b_update(&state, (const unsigned char*)hdr, 140);
 
@@ -69,15 +69,21 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
 	  args.GetReturnValue().Set(false);
 	  return;
   }
+
   const char *soln = node::Buffer::Data(solution);
 
   std::vector<unsigned char> vecSolution(soln, soln + node::Buffer::Length(solution));
 
-  bool result = verifyEH(hdr, vecSolution, n, k);
+  bool result;
+  if (args.Length() == 5) {
+    String::Utf8Value str(args[4]);
+    result = verifyEH(hdr, vecSolution, n, k, *str);
+  } else {
+    result = verifyEH(hdr, vecSolution, n, k, "ZcashPoW");
+  }
+
   args.GetReturnValue().Set(result);
-
 }
-
 
 void Init(Handle<Object> exports) {
   NODE_SET_METHOD(exports, "verify", Verify);
